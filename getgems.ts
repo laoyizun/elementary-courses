@@ -1,7 +1,7 @@
 // 在此处添加您的代码
 //% weight=100 color=#6699CC icon="\uf140" block="Getgems"
 //% groups='["Tiles", "Display", "Sprite"]'
-namespace cubicbird {
+namespace  getgems{
 
     //%block
     //%group="Sprite"
