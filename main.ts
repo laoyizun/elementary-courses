@@ -6,10 +6,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         getgems.stepForward()
     }
     getgems.turn(turnDireciton.left)
-    for (let index = 0; index < 5; index++) {
+    for (let index = 0; index < 9; index++) {
         getgems.stepForward()
     }
-    getgems.turn(turnDireciton.left)
-    getgems.stepForward()
-    getgems.turn(turnDireciton.right)
 })
