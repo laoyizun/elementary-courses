@@ -50,17 +50,27 @@ enum turnDireciton{
     }
 
 //场景初始化
-tiles.setTileAt(tiles.getTileLocation(0, 0), sprites.dungeon.collectibleInsignia)
-tiles.placeOnRandomTile(gemsHero, sprites.dungeon.collectibleInsignia)
-//Getgems积木块定义
-//% weight=100 color=#6699CC icon="\uf140" block="Getgems"
+tiles.setTilemap(tiles.createTilemap(hex`0a0008000000010101010101000000010101010101010100000101010101010101000001010101010101010000010101010101010100000101010101010101000000000000000000000001010101010101010101`, img`
+    . . . . . . . . . . 
+    . . . . . . . . . . 
+    . . . . . . . . . . 
+    . . . . . . . . . . 
+    . . . . . . . . . . 
+    . . . . . . . . . . 
+    . . . . . . . . . . 
+    . . . . . . . . . . 
+    `, [myTiles.transparency16,sprites.builtin.forestTiles0], TileScale.Sixteen))
+tiles.placeOnTile(gemsHero, tiles.getTileLocation(0, 0))
+
+//Getgems积木块定义  icon="\uf140"  \f3a5
+//% weight=100 color=#6699CC icon="\uf145" block="Getgems"
 //% groups='["move"]'
 namespace getgems {
     //转向
     //%block
     //%group="move"
-    //%blockId=turnRound block="turnRound %turnDirection"
-    export function turnRound (choice: turnDireciton) {
+    //%blockId=turn block="turn %turnDirection"
+    export function turn (choice: turnDireciton) {
     if (choice ) {
         heroDirection += 1
         heroDirection = heroDirection % 4
