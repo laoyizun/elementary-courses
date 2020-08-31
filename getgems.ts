@@ -1,15 +1,78 @@
+namespace SpriteKind {
+    export const gemsPlayer = SpriteKind.create()
+}
+scene.onOverlapTile(SpriteKind.gemsPlayer, sprites.builtin.forestTiles0, function (sprite, location) {
+    if (heroDirection == 3) {
+        heroRow += -1
+    } else if (heroDirection == 0) {
+        heroCol += -1
+    } else if (heroDirection == 1) {
+        heroRow += 1
+    } else if (heroDirection == 2) {
+        heroCol += 1
+    }
+    scene.cameraShake(4, 500)
+    tiles.placeOnTile(gemsHero, tiles.getTileLocation(heroRow, heroCol))
+})
+
+function stepForward () {
+    if (heroDirection == 3) {
+        heroRow += 1
+    } else if (heroDirection == 0) {
+        heroCol += 1
+    } else if (heroDirection == 1) {
+        heroRow += -1
+    } else if (heroDirection == 2) {
+        heroCol += -1
+    }
+    tiles.placeOnTile(gemsHero, tiles.getTileLocation(heroRow, heroCol))
+    pause(500)
+}
+
+controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
+	
+})
+controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
+	
+})
+let gemsHero: Sprite = null
+let heroDirection = 0
+let heroCol = 0
+let heroRow = 0
+heroRow = 0
+heroCol = 0
+heroDirection = 0
+gemsHero = sprites.create(img`
+    . . . . . . f f f f . . . . . . 
+    . . . . f f f 2 2 f f f . . . . 
+    . . . f f f 2 2 2 2 f f f . . . 
+    . . f f f e e e e e e f f f . . 
+    . . f f e 2 2 2 2 2 2 e e f . . 
+    . . f e 2 f f f f f f 2 e f . . 
+    . . f f f f e e e e f f f f . . 
+    . f f e f b f 4 4 f b f e f f . 
+    . f e e 4 1 f d d f 1 4 e e f . 
+    . . f e e d d d d d d e e f . . 
+    . . . f e e 4 4 4 4 e e f . . . 
+    . . e 4 f 2 2 2 2 2 2 f 4 e . . 
+    . . 4 d f 2 2 2 2 2 2 f d 4 . . 
+    . . 4 4 f 4 4 5 5 4 4 f 4 4 . . 
+    . . . . . f f f f f f . . . . . 
+    . . . . . f f . . f f . . . . . 
+    `, SpriteKind.gemsPlayer)
+enum turnDireciton{
+    anticlockwise=0,
+    clockwise =1
+    }
 //% weight=100 color=#6699CC icon="\uf140" block="Getgems"
 //% groups='["move"]'
 namespace getgems {
-enum turnDireciton{
-    anticlockwise = 0,
-    clockwise = 1
-    }
+
     //%block
-    //%group="Sprite"
+    //%group="move"
     //%blockId=turnRound block="turnRound %turnDirection"
-    export function turnRound (turnDirection: boolean) {
-    if (turnDirection) {
+    export function turnRound (choice: turnDireciton) {
+    if (choice ) {
         heroDirection += 1
         heroDirection = heroDirection % 4
     } else {
@@ -93,8 +156,12 @@ enum turnDireciton{
             . . . . . f f . . f f . . . . . 
             `)
     }
+    pause(500)
 }
-function stepForward () {
+    //%block
+    //%group="move"
+    //%blockId=stepForward block="stepForward"
+    export function stepForward () {
     if (heroDirection == 3) {
         heroRow += 1
     } else if (heroDirection == 0) {
@@ -105,26 +172,7 @@ function stepForward () {
         heroCol += -1
     }
     tiles.placeOnTile(gemsHero, tiles.getTileLocation(heroRow, heroCol))
+    pause(500)
 }
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    turnRound(true)
-})
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    turnRound(false)
-})
-controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
-    stepForward()
-})
-controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
-	
-})
-let gemsHero: Sprite = null
-let heroDirection = 0
-let heroCol = 0
-let heroRow = 0
-heroRow = 0
-heroCol = 0
-heroDirection = 0
-  
 }
 
