@@ -1,6 +1,9 @@
+//精灵类声明
 namespace SpriteKind {
     export const gemsPlayer = SpriteKind.create()
 }
+
+//碰到墙回退
 scene.onOverlapTile(SpriteKind.gemsPlayer, sprites.builtin.forestTiles0, function (sprite, location) {
     if (heroDirection == 3) {
         heroRow += -1
@@ -15,26 +18,7 @@ scene.onOverlapTile(SpriteKind.gemsPlayer, sprites.builtin.forestTiles0, functio
     tiles.placeOnTile(gemsHero, tiles.getTileLocation(heroRow, heroCol))
 })
 
-function stepForward () {
-    if (heroDirection == 3) {
-        heroRow += 1
-    } else if (heroDirection == 0) {
-        heroCol += 1
-    } else if (heroDirection == 1) {
-        heroRow += -1
-    } else if (heroDirection == 2) {
-        heroCol += -1
-    }
-    tiles.placeOnTile(gemsHero, tiles.getTileLocation(heroRow, heroCol))
-    pause(500)
-}
-
-controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
-	
-})
-controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
-	
-})
+//变量声明
 let gemsHero: Sprite = null
 let heroDirection = 0
 let heroCol = 0
@@ -64,10 +48,15 @@ enum turnDireciton{
     left=0,
     right =1
     }
+
+//场景初始化
+tiles.setTileAt(tiles.getTileLocation(0, 0), sprites.dungeon.collectibleInsignia)
+tiles.placeOnRandomTile(gemsHero, sprites.dungeon.collectibleInsignia)
+//Getgems积木块定义
 //% weight=100 color=#6699CC icon="\uf140" block="Getgems"
 //% groups='["move"]'
 namespace getgems {
-
+    //转向
     //%block
     //%group="move"
     //%blockId=turnRound block="turnRound %turnDirection"
@@ -158,6 +147,7 @@ namespace getgems {
     }
     pause(500)
 }
+    //前进
     //%block
     //%group="move"
     //%blockId=stepForward block="stepForward"
