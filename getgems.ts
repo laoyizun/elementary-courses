@@ -61,8 +61,8 @@ gemsHero = sprites.create(img`
     . . . . . f f . . f f . . . . . 
     `, SpriteKind.gemsPlayer)
 enum turnDireciton{
-    anticlockwise=0,
-    clockwise =1
+    left=0,
+    right =1
     }
 //% weight=100 color=#6699CC icon="\uf140" block="Getgems"
 //% groups='["move"]'

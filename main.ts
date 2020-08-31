@@ -5,13 +5,13 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     for (let index = 0; index < 6; index++) {
         getgems.stepForward()
     }
-    getgems.turnRound(turnDireciton.anticlockwise)
+    getgems.turnRound(turnDireciton.left)
     for (let index = 0; index < 5; index++) {
         getgems.stepForward()
     }
-    getgems.turnRound(turnDireciton.anticlockwise)
+    getgems.turnRound(turnDireciton.left)
     getgems.stepForward()
-    getgems.turnRound(turnDireciton.clockwise)
+    getgems.turnRound(turnDireciton.right)
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
 	
