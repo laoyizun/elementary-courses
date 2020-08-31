@@ -1,7 +1,13 @@
 //精灵类声明
 namespace SpriteKind {
     export const gemsPlayer = SpriteKind.create()
+    export const gemsCatcher = SpriteKind.create()
+    export const gems = SpriteKind.create()
 }
+sprites.onOverlap(SpriteKind.gemsCatcher, SpriteKind.gems, function(sprite: Sprite, otherSprite: Sprite) {
+    otherSprite.destroy()
+    info.player1.changeScoreBy(-1)
+})
 
 //碰到墙回退
 scene.onOverlapTile(SpriteKind.gemsPlayer, sprites.builtin.forestTiles0, function (sprite, location) {
@@ -23,6 +29,8 @@ let gemsHero: Sprite = null
 let heroDirection = 0
 let heroCol = 0
 let heroRow = 0
+let gemsNum = 3 
+info.player1.setScore(gemsNum)
 heroRow = 0
 heroCol = 0
 heroDirection = 0
@@ -64,7 +72,7 @@ tiles.placeOnTile(gemsHero, tiles.getTileLocation(0, 0))
 
 //Getgems积木块定义  icon="\uf140"  \f3a5
 //% weight=100 color=#6699CC icon="\uf145" block="Getgems"
-//% groups='["move"]'
+//% groups='["move","operate"]'
 namespace getgems {
     //转向
     //%block
@@ -174,5 +182,13 @@ namespace getgems {
     tiles.placeOnTile(gemsHero, tiles.getTileLocation(heroRow, heroCol))
     pause(500)
 }
+
+    //获得宝石
+    //%block="takeGems"
+    //%group="operate"
+    //%blockId=takeGems
+    export function takeGems(){
+
+    }
 }
 
