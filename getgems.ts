@@ -3,13 +3,14 @@ namespace SpriteKind {
     export const gemsPlayer = SpriteKind.create()
     export const gemsCatcher = SpriteKind.create()
     export const gems = SpriteKind.create()
+    export const getGemsKind = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.gemsCatcher, SpriteKind.gems, function(sprite: Sprite, otherSprite: Sprite) {
     otherSprite.destroy()
     info.player1.changeScoreBy(-1)
 })
 
-//碰到墙回退
+//碰到墙回退事件
 scene.onOverlapTile(SpriteKind.gemsPlayer, sprites.builtin.forestTiles0, function (sprite, location) {
     if (heroDirection == 3) {
         heroRow += -1
@@ -22,6 +23,12 @@ scene.onOverlapTile(SpriteKind.gemsPlayer, sprites.builtin.forestTiles0, functio
     }
     scene.cameraShake(4, 500)
     tiles.placeOnTile(gemsHero, tiles.getTileLocation(heroRow, heroCol))
+})
+
+//获得宝石事件
+sprites.onOverlap(SpriteKind.getGemsKind, SpriteKind.gemskind, function(sprite: Sprite, otherSprite: Sprite) {
+    otherSprite.destroy()
+    info.player1.changeScoreBy(-1)
 })
 
 //变量声明
@@ -59,15 +66,15 @@ enum turnDireciton{
 
 //场景初始化
 tiles.setTilemap(tiles.createTilemap(hex`0a0008000000010101010101000000010101010101010100000101010101010101000001010101010101010000010101010101010100000101010101010101000000000000000000000001010101010101010101`, img`
-    . . . . . . . . . . 
-    . . . . . . . . . . 
-    . . . . . . . . . . 
-    . . . . . . . . . . 
-    . . . . . . . . . . 
-    . . . . . . . . . . 
-    . . . . . . . . . . 
-    . . . . . . . . . . 
-    `, [myTiles.transparency16,sprites.builtin.forestTiles0], TileScale.Sixteen))
+    . . . . . . . . . .
+    . . . . . . . . . .
+    . . . . . . . . . .
+    . . . . . . . . . .
+    . . . . . . . . . .
+    . . . . . . . . . .
+    . . . . . . . . . .
+    . . . . . . . . . .
+`, [myTiles.transparency16,sprites.builtin.forestTiles0], TileScale.Sixteen))
 tiles.placeOnTile(gemsHero, tiles.getTileLocation(0, 0))
 
 //Getgems积木块定义  icon="\uf140"  \f3a5
@@ -188,7 +195,9 @@ namespace getgems {
     //%group="operate"
     //%blockId=takeGems
     export function takeGems(){
-
+    gemsHero.setKind(SpriteKind.getGemsKind)
+    pause(100)
+    gemsHero.setKind(SpriteKind.gemsPlayer)
     }
 }
 
