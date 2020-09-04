@@ -4,6 +4,7 @@ namespace SpriteKind {
     export const gemsCatcher = SpriteKind.create()
     export const gems = SpriteKind.create()
     export const getGemsKind = SpriteKind.create()
+    export const gemsKind = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.gemsCatcher, SpriteKind.gems, function(sprite: Sprite, otherSprite: Sprite) {
     otherSprite.destroy()
@@ -26,7 +27,7 @@ scene.onOverlapTile(SpriteKind.gemsPlayer, sprites.builtin.forestTiles0, functio
 })
 
 //获得宝石事件
-sprites.onOverlap(SpriteKind.getGemsKind, SpriteKind.gemskind, function(sprite: Sprite, otherSprite: Sprite) {
+sprites.onOverlap(SpriteKind.getGemsKind, SpriteKind.gemsKind, function(sprite: Sprite, otherSprite: Sprite) {
     otherSprite.destroy()
     info.player1.changeScoreBy(-1)
 })
@@ -77,7 +78,8 @@ tiles.setTilemap(tiles.createTilemap(hex`0a0008000000010101010101000000010101010
 `, [myTiles.transparency16,sprites.builtin.forestTiles0], TileScale.Sixteen))
 tiles.placeOnTile(gemsHero, tiles.getTileLocation(0, 0))
 
-//Getgems积木块定义  icon="\uf140"  \f3a5
+//Getgems积木块定义  
+
 //% weight=100 color=#6699CC icon="\uf145" block="Getgems"
 //% groups='["move","operate"]'
 namespace getgems {
