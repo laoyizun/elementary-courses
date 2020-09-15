@@ -30,13 +30,12 @@ scene.onOverlapTile(SpriteKind.gemsPlayer, sprites.builtin.forestTiles0, functio
 sprites.onOverlap(SpriteKind.getGemsKind, SpriteKind.gemsKind, function(sprite: Sprite, otherSprite: Sprite) {
     otherSprite.destroy()
     info.player1.changeScoreBy(-1)
+    gemsNum-=1
+    if(gemsNum == 0){
+        game.over(true)
+    }
 })
 
-function getGems () {
-    gemsHero.setKind(SpriteKind.getGemsKind)
-    pause(100)
-    gemsHero.setKind(SpriteKind.gemsPlayer)
-}
 
 //变量声明
 let gem: Sprite = null
@@ -50,23 +49,23 @@ heroRow = 0
 heroCol = 0
 heroDirection = 0
 gemsHero = sprites.create(img`
-    . . . . . . f f f f . . . . . . 
-    . . . . f f f 2 2 f f f . . . . 
-    . . . f f f 2 2 2 2 f f f . . . 
-    . . f f f e e e e e e f f f . . 
-    . . f f e 2 2 2 2 2 2 e e f . . 
-    . . f e 2 f f f f f f 2 e f . . 
-    . . f f f f e e e e f f f f . . 
-    . f f e f b f 4 4 f b f e f f . 
-    . f e e 4 1 f d d f 1 4 e e f . 
-    . . f e e d d d d d d e e f . . 
-    . . . f e e 4 4 4 4 e e f . . . 
-    . . e 4 f 2 2 2 2 2 2 f 4 e . . 
-    . . 4 d f 2 2 2 2 2 2 f d 4 . . 
-    . . 4 4 f 4 4 5 5 4 4 f 4 4 . . 
-    . . . . . f f f f f f . . . . . 
-    . . . . . f f . . f f . . . . . 
-    `, SpriteKind.gemsPlayer)
+    . . . . . . f f f f . . . . . .
+    . . . . f f f 2 2 f f f . . . .
+    . . . f f f 2 2 2 2 f f f . . .
+    . . f f f e e e e e e f f f . .
+    . . f f e 2 2 2 2 2 2 e e f . .
+    . . f e 2 f f f f f f 2 e f . .
+    . . f f f f e e e e f f f f . .
+    . f f e f b f 4 4 f b f e f f .
+    . f e e 4 1 f d d f 1 4 e e f .
+    . . f e e d d d d d d e e f . .
+    . . . f e e 4 4 4 4 e e f . . .
+    . . e 4 f 2 2 2 2 2 2 f 4 e . .
+    . . 4 d f 2 2 2 2 2 2 f d 4 . .
+    . . 4 4 f 4 4 5 5 4 4 f 4 4 . .
+    . . . . . f f f f f f . . . . .
+    . . . . . f f . . f f . . . . .
+`, SpriteKind.gemsPlayer)
 enum turnDireciton{
     left=0,
     right =1
@@ -79,22 +78,11 @@ enum turnDireciton{
 //% groups='["operate","move"]'
 namespace getgems {
 
-
-    //获得宝石
-    //%block="takeGems"
+   //初始化
+    //%block="initGame"
     //%group="operate"
-    //%blockId=takeGems
-    export function takeGems(){
-    gemsHero.setKind(SpriteKind.getGemsKind)
-    pause(100)
-    gemsHero.setKind(SpriteKind.gemsPlayer)
-}
-
-    //初始化
-    //%block="init"
-    //%group="operate"
-    //%blockId=init
-    export function init(){
+    //%blockId=initGame
+    export function initGame(){
         tiles.setTilemap(tiles.createTilemap(hex`0a0008000001010101010201010100010101010100010101000101010101000101010001010101010001010100010101010100010101000101010101000101010200000000000201010101010101010101010101`, img`
 . . . . . . . . . . 
 . . . . . . . . . . 
@@ -128,6 +116,24 @@ namespace getgems {
         tiles.placeOnTile(gem, 值)
     }
 }
+    //获得宝石
+    //%block="takeGems"
+    //%group="operate"
+    //%blockId=takeGems
+    export function takeGems(){
+    gemsHero.setKind(SpriteKind.getGemsKind)
+    pause(100)
+    music.baDing.play()
+    gemsHero.setFlag(SpriteFlag.Ghost, true)
+    gemsHero.y-=5
+    pause(100)
+    gemsHero.setKind(SpriteKind.gemsPlayer)
+    gemsHero.setFlag(SpriteFlag.Ghost, false)
+    gemsHero.y+=5
+
+}
+
+
 
     //转向
     //%block
