@@ -72,47 +72,63 @@ enum turnDireciton{
     right =1
     }
 
-//场景初始化
-tiles.setTilemap(tiles.createTilemap(hex`0a0008000001010101010201010100010101010100010101000101010101000101010001010101010001010100010101010100010101000101010101000101010200000000000201010101010101010101010101`, img`
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-`, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia], TileScale.Sixteen))
-tiles.placeOnTile(gemsHero, tiles.getTileLocation(0, 0))
-// let gemsLoc =tiles.getTilesByType(sprites.dungeon.collectibleInsignia)
-// function setgems(){
-//     for (let 值 of gemsLoc) {
-//         gem = sprites.create(img`
-//             . . . . . . . . . . . . . . . .
-//             . . . . . . 4 4 4 4 . . . . . .
-//             . . . . 4 4 4 5 5 4 4 4 . . . .
-//             . . . 3 3 3 3 4 4 4 4 4 4 . . .
-//             . . 4 3 3 3 3 2 2 2 1 1 4 4 . .
-//             . . 3 3 3 3 3 2 2 2 1 1 5 4 . .
-//             . 4 3 3 3 3 2 2 2 2 2 5 5 4 4 .
-//             . 4 3 3 3 2 2 2 4 4 4 4 5 4 4 .
-//             . 4 4 3 3 2 2 4 4 4 4 4 4 4 4 .
-//             . 4 2 3 3 2 2 4 4 4 4 4 4 4 4 .
-//             . . 4 2 3 3 2 4 4 4 4 4 2 4 . .
-//             . . 4 2 2 3 2 2 4 4 4 2 4 4 . .
-//             . . . 4 2 2 2 2 2 2 2 2 4 . . .
-//             . . . . 4 4 2 2 2 2 4 4 . . . .
-//             . . . . . . 4 4 4 4 . . . . . .
-//             . . . . . . . . . . . . . . . .
-//         `, SpriteKind.gemsKind)
-//         tiles.placeOnTile(gem, 值)
-//     }}
-    
+
 //Getgems积木块定义  
 
-//% weight=100 color=#6699CC icon="\uf145" block="Getgems"
-//% groups='["move","operate"]'
+//%weight=100 color=#6699CC icon="\uf145" block="Getgems"
+//% groups='["operate","move"]'
 namespace getgems {
+
+
+    //获得宝石
+    //%block="takeGems"
+    //%group="operate"
+    //%blockId=takeGems
+    export function takeGems(){
+    gemsHero.setKind(SpriteKind.getGemsKind)
+    pause(100)
+    gemsHero.setKind(SpriteKind.gemsPlayer)
+}
+
+    //初始化
+    //%block="init"
+    //%group="operate"
+    //%blockId=init
+    export function init(){
+        tiles.setTilemap(tiles.createTilemap(hex`0a0008000001010101010201010100010101010100010101000101010101000101010001010101010001010100010101010100010101000101010101000101010200000000000201010101010101010101010101`, img`
+. . . . . . . . . . 
+. . . . . . . . . . 
+. . . . . . . . . . 
+. . . . . . . . . . 
+. . . . . . . . . . 
+. . . . . . . . . . 
+. . . . . . . . . . 
+. . . . . . . . . . 
+    `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia], TileScale.Sixteen))
+    tiles.placeOnTile(gemsHero, tiles.getTileLocation(0, 0))
+    for (let 值 of tiles.getTilesByType(sprites.dungeon.collectibleInsignia)) {
+        gem = sprites.create(img`
+            . . . . . . . . . . . . . . . .
+            . . . . . . 4 4 4 4 . . . . . .
+            . . . . 4 4 4 5 5 4 4 4 . . . .
+            . . . 3 3 3 3 4 4 4 4 4 4 . . .
+            . . 4 3 3 3 3 2 2 2 1 1 4 4 . .
+            . . 3 3 3 3 3 2 2 2 1 1 5 4 . .
+            . 4 3 3 3 3 2 2 2 2 2 5 5 4 4 .
+            . 4 3 3 3 2 2 2 4 4 4 4 5 4 4 .
+            . 4 4 3 3 2 2 4 4 4 4 4 4 4 4 .
+            . 4 2 3 3 2 2 4 4 4 4 4 4 4 4 .
+            . . 4 2 3 3 2 4 4 4 4 4 2 4 . .
+            . . 4 2 2 3 2 2 4 4 4 2 4 4 . .
+            . . . 4 2 2 2 2 2 2 2 2 4 . . .
+            . . . . 4 4 2 2 2 2 4 4 . . . .
+            . . . . . . 4 4 4 4 . . . . . .
+            . . . . . . . . . . . . . . . .
+        `, SpriteKind.gemsKind)
+        tiles.placeOnTile(gem, 值)
+    }
+}
+
     //转向
     //%block
     //%group="move"
@@ -222,14 +238,6 @@ namespace getgems {
     pause(500)
 }
 
-    //获得宝石
-    //%block="takeGems"
-    //%group="operate"
-    //%blockId=takeGems
-    export function takeGems(){
-    gemsHero.setKind(SpriteKind.getGemsKind)
-    pause(100)
-    gemsHero.setKind(SpriteKind.gemsPlayer)
-    }
+
 }
 
