@@ -115,6 +115,7 @@ namespace getgems {
         `, SpriteKind.gemsKind)
         tiles.placeOnTile(gem, 值)
     }
+    gemsHero.z = 1000
 }
     //获得宝石
     //%block="takeGems"

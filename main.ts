@@ -8,4 +8,3 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 getgems.initGame()
-gemsHero.z = 1000
