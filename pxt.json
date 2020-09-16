@@ -3,8 +3,7 @@
     "version": "1.0.0",
     "description": "",
     "dependencies": {
-        "device": "*",
-        "cubicbird-helper-blocks": "github:laoyizun/cubicbird-helper-blocks#v0.6.0"
+        "device": "*"
     },
     "files": [
         "main.blocks",
