@@ -6,10 +6,14 @@ namespace SpriteKind {
     export const getGemsKind = SpriteKind.create()
     export const gemsKind = SpriteKind.create()
 }
-sprites.onOverlap(SpriteKind.gemsCatcher, SpriteKind.gems, function(sprite: Sprite, otherSprite: Sprite) {
-    otherSprite.destroy()
-    info.player1.changeScoreBy(-1)
-})
+
+
+
+//Getgems积木块定义  
+
+//%weight=100 color=#6699CC icon="\uf145" block="Getgems"
+//% groups='["operate","move"]'
+namespace getgems {
 
 //碰到墙回退事件
 scene.onOverlapTile(SpriteKind.gemsPlayer, sprites.builtin.forestTiles0, function (sprite, location) {
@@ -27,26 +31,68 @@ scene.onOverlapTile(SpriteKind.gemsPlayer, sprites.builtin.forestTiles0, functio
 })
 
 //获得宝石事件
+sprites.onOverlap(SpriteKind.gemsCatcher, SpriteKind.gems, function(sprite: Sprite, otherSprite: Sprite) {
+    otherSprite.destroy()
+    info.player1.changeScoreBy(-1)
+})
 sprites.onOverlap(SpriteKind.getGemsKind, SpriteKind.gemsKind, function(sprite: Sprite, otherSprite: Sprite) {
     otherSprite.destroy()
     info.player1.changeScoreBy(-1)
     gemsNum-=1
-    if(gemsNum == 0){
-        game.over(true)
-    }
 })
+
+//关卡设定
+function levelset(level:number){
+   switch(level){
+				case 1:
+                     tiles.setTilemap(tiles.createTilemap(hex`0a0008000202020202020202020202020202020202020202020202020202020202020202020102020202020202020203020202020202020202020202020202020202020202020202020202020202020202020202`, img`
+                         . . . . . . . . . .
+                         . . . . . . . . . .
+                         . . . . . . . . . .
+                         . . . . . . . . . .
+                         . . . . . . . . . .
+                         . . . . . . . . . .
+                         . . . . . . . . . .
+                         . . . . . . . . . .
+                     `, [myTiles.transparency16,sprites.dungeon.buttonTealDepressed,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia], TileScale.Sixteen))   
+					break;
+				case 2:
+                    tiles.setTilemap(tiles.createTilemap(hex`0a0008000101010101010101010101010101010101010101010101030000000001010101010000010002010101010101020100010101010101010000000101010101010101010101010101010101010101010101`, img`
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                    `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.buttonTealDepressed], TileScale.Sixteen))
+                    break;
+				default:
+                    tiles.setTilemap(tiles.createTilemap(hex`0a0008000301010101010201010100010101010100010101000101010101000101010001010101010001010100010101010100010101000101010101000101010200000000000201010101010101010101010101`, img`
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                    `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.buttonTealDepressed], TileScale.Sixteen))
+   
+					break;
+			}    
+}
 
 
 //变量声明
 let gem: Sprite = null
 let gemsHero: Sprite = null
 let heroDirection = 0
-let heroCol = 0
+let gemsNum = 0 
+let level = 1
 let heroRow = 0
-let gemsNum = 3 
-info.player1.setScore(gemsNum)
-heroRow = 0
-heroCol = 0
+let heroCol =0
 heroDirection = 0
 gemsHero = sprites.create(img`
     . . . . . . f f f f . . . . . .
@@ -71,29 +117,31 @@ enum turnDireciton{
     right =1
     }
 
-
-//Getgems积木块定义  
-
-//%weight=100 color=#6699CC icon="\uf145" block="Getgems"
-//% groups='["operate","move"]'
-namespace getgems {
-
    //初始化
     //%block="initGame"
     //%group="operate"
     //%blockId=initGame
-    export function initGame(){
-        tiles.setTilemap(tiles.createTilemap(hex`0a0008000001010101010201010100010101010100010101000101010101000101010001010101010001010100010101010100010101000101010101000101010200000000000201010101010101010101010101`, img`
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-    `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia], TileScale.Sixteen))
-    tiles.placeOnTile(gemsHero, tiles.getTileLocation(0, 0))
+    export function initGame(){ 
+        level = game.askForNumber("set level")
+        levelset(level)
+    tiles.placeOnRandomTile(gemsHero, img`
+        b b b b b b b b b b b b b b b b
+        b c b b b b b b b b b b b b c b
+        b b b c 6 6 6 6 6 6 6 6 c b b b
+        b b c 6 6 6 6 6 6 6 6 6 6 c b b
+        b b 6 6 6 6 6 6 6 6 6 6 6 6 b b
+        b b 6 6 6 6 6 6 6 6 6 6 6 6 b b
+        b b 6 6 6 6 6 6 6 6 6 6 6 6 b b
+        b b 6 6 6 6 6 6 6 6 6 6 6 6 b b
+        b b 6 6 6 6 6 6 6 6 6 6 6 6 b b
+        b b 9 6 6 6 6 6 6 6 6 6 6 9 b b
+        b b 9 6 6 6 6 6 6 6 6 6 6 9 b b
+        b b 6 9 6 6 6 6 6 6 6 6 9 6 b b
+        b b c 6 9 9 9 9 9 9 9 9 6 c b b
+        b b b c c c c c c c c c c b b b
+        b c b b b b b b b b b b b b c b
+        b b b b b b b b b b b b b b b b
+    `)
     for (let 值 of tiles.getTilesByType(sprites.dungeon.collectibleInsignia)) {
         gem = sprites.create(img`
             . . . . . . . . . . . . . . . .
@@ -114,8 +162,15 @@ namespace getgems {
             . . . . . . . . . . . . . . . .
         `, SpriteKind.gemsKind)
         tiles.placeOnTile(gem, 值)
+        gemsNum+=1
+        info.player1.setScore(gemsNum)
     }
     gemsHero.z = 1000
+    let heroX = gemsHero.x
+    let heroY = gemsHero.y
+    heroRow = gemsHero.y/16-0.5
+    heroCol =gemsHero.x/16-0.5
+    gemsHero.say("改程序前，先画流程图")
 }
     //获得宝石
     //%block="takeGems"
@@ -131,10 +186,10 @@ namespace getgems {
     gemsHero.setKind(SpriteKind.gemsPlayer)
     gemsHero.setFlag(SpriteFlag.Ghost, false)
     gemsHero.y+=5
-
+    if(gemsNum==0){
+        game.over(true)
+    }
 }
-
-
 
     //转向
     //%block
