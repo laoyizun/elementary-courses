@@ -86,7 +86,16 @@ let level = 1
 let heroRow = 0
 let heroCol =0
 heroDirection = 0
-gemsHero = sprites.create(img`
+export enum turnDirection{
+    left,
+    right
+    }
+
+   //初始化
+    //%block
+    //%group="operate"
+    export function initGame(){ 
+        gemsHero = sprites.create(img`
     . . . . . . f f f f . . . . . .
     . . . . f f f 2 2 f f f . . . .
     . . . f f f 2 2 2 2 f f f . . .
@@ -104,15 +113,6 @@ gemsHero = sprites.create(img`
     . . . . . f f f f f f . . . . .
     . . . . . f f . . f f . . . . .
 `, SpriteKind.gemsPlayer)
-export enum turnDirection{
-    left,
-    right
-    }
-
-   //初始化
-    //%block
-    //%group="operate"
-    export function initGame(){ 
         level = game.askForNumber("set level")
         levelset(level)
     tiles.placeOnRandomTile(gemsHero, img`
@@ -177,9 +177,7 @@ export enum turnDirection{
     gemsHero.setFlag(SpriteFlag.Ghost, false)
     gemsHero.y+=5
     if(gemsNum==0){
-        
-         level+=1
-        initGame()
+        game.over(true)
     }
 }
 
@@ -302,4 +300,4 @@ export enum turnDirection{
 
 
 }
-
+getgems.initGame()

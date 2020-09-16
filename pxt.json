@@ -9,7 +9,6 @@
         "main.blocks",
         "main.ts",
         "README.md",
-        "getgems.ts",
         "tilemap.g.jres",
         "tilemap.g.ts"
     ],
