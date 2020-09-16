@@ -112,9 +112,9 @@ gemsHero = sprites.create(img`
     . . . . . f f f f f f . . . . .
     . . . . . f f . . f f . . . . .
 `, SpriteKind.gemsPlayer)
-enum turnDireciton{
-    left=0,
-    right =1
+export enum turnDirection{
+    left,
+    right
     }
 
    //初始化
@@ -197,13 +197,23 @@ enum turnDireciton{
     //%block
     //%group="move"
     //%blockId=turn block="turn %turnDirection"
-    export function turn (choice: turnDireciton) {
-    if (choice ) {
+    export function turn (choice: turnDirection) {
+    // if (choice==right) {
+    //     heroDirection += 1
+    //     heroDirection = heroDirection % 4
+    // } else {
+    //     heroDirection += 3
+    //     heroDirection = heroDirection % 4
+    // }
+    switch(choice){
+        case turnDirection.right:
         heroDirection += 1
         heroDirection = heroDirection % 4
-    } else {
+        break
+        default :
         heroDirection += 3
         heroDirection = heroDirection % 4
+        break
     }
     if (heroDirection == 3) {
         gemsHero.setImage(img`
