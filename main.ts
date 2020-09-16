@@ -302,4 +302,4 @@ export enum turnDirection{
 
 
 }
-getgems.initGame()
+
