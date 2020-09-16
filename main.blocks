@@ -1,1 +1,1 @@
-<xml xmlns="https://developers.google.com/blockly/xml"><block type="pxt-on-start" id="n:wps!A%C]]qX4iX?tZO" x="0" y="0"><statement name="HANDLER"><block type="initGame" id="}$a{ke+5W1y+)rn+L}yH"/></statement></block></xml>
+<xml xmlns="https://developers.google.com/blockly/xml"><block type="pxt-on-start" id="gY(,0XQ-([VQJ4H6Z:4w" x="0" y="0"><statement name="HANDLER"><block type="getgems_initGame" id="csGfC*t=/pDt5Aic!^pF"/></statement></block></xml>

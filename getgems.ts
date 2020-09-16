@@ -118,9 +118,8 @@ export enum turnDirection{
     }
 
    //初始化
-    //%block="initGame"
+    //%block
     //%group="operate"
-    //%blockId=initGame
     export function initGame(){ 
         level = game.askForNumber("set level")
         levelset(level)
@@ -173,9 +172,8 @@ export enum turnDirection{
     gemsHero.say("改程序前，先画流程图")
 }
     //获得宝石
-    //%block="takeGems"
+    //%block
     //%group="operate"
-    //%blockId=takeGems
     export function takeGems(){
     gemsHero.setKind(SpriteKind.getGemsKind)
     pause(100)
@@ -194,9 +192,8 @@ export enum turnDirection{
 }
 
     //转向
-    //%block
+    //%block="turn %turnDirection"
     //%group="move"
-    //%blockId=turn block="turn %turnDirection"
     export function turn (choice: turnDirection) {
     // if (choice==right) {
     //     heroDirection += 1
@@ -297,7 +294,6 @@ export enum turnDirection{
     //前进
     //%block
     //%group="move"
-    //%blockId=stepForward block="stepForward"
     export function stepForward () {
     if (heroDirection == 3) {
         heroRow += 1
