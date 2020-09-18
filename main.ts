@@ -5,6 +5,9 @@ namespace SpriteKind {
     export const getGemsKind = SpriteKind.create()
     export const gemsKind = SpriteKind.create()
 }
+//icon="\u25CA"
+//% weight=100 color=#6699CC icon="\u25CA" block="Getgems"
+//% groups='["Operate", "Move"]'
 namespace getgems {
 
 //碰到墙回退事件
@@ -93,7 +96,7 @@ export enum turnDirection{
 
    //初始化
     //%block
-    //%group="operate"
+    //%group="Operate"
     export function initGame(){ 
         gemsHero = sprites.create(img`
     . . . . . . f f f f . . . . . .
@@ -165,7 +168,7 @@ export enum turnDirection{
 }
     //获得宝石
     //%block
-    //%group="operate"
+    //%group="Operate"
     export function takeGems(){
     gemsHero.setKind(SpriteKind.getGemsKind)
     pause(100)
@@ -183,7 +186,7 @@ export enum turnDirection{
 
     //转向
     //%block="turn %turnDirection"
-    //%group="move"
+    //%group="Move"
     export function turn (choice: turnDirection) {
     // if (choice==right) {
     //     heroDirection += 1
@@ -283,7 +286,7 @@ export enum turnDirection{
 }
     //前进
     //%block
-    //%group="move"
+    //%group="Move"
     export function stepForward () {
     if (heroDirection == 3) {
         heroRow += 1
