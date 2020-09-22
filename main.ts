@@ -16,6 +16,11 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
     getgems.useMagic(getgems.magicKind.fire)
 })
+
+
+//icon="\u25CA"
+//% weight=100 color=#6699CC icon="\u25CA" block="Getgems"
+//% groups='["Operate", "Move"]'
 namespace getgems {
 
 //角色碰到障碍物回退
