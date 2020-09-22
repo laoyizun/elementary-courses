@@ -16,11 +16,6 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
     getgems.useMagic(getgems.magicKind.fire)
 })
-
-
-//icon="\u25CA"
-//% weight=100 color=#6699CC icon="\u25CA" block="Getgems"
-//% groups='["Operate", "Move"]'
 namespace getgems {
 
 //角色碰到障碍物回退
@@ -37,6 +32,9 @@ function goBack(){
     scene.cameraShake(4, 500)
     tiles.placeOnTile(gemsHero, tiles.getTileLocation(heroCol, heroRow))
 }
+
+//事件注册
+//9.23更新标记：魔法消除障碍物碰撞事件
 //碰到墙回退
 scene.onOverlapTile(SpriteKind.gemsPlayer, sprites.builtin.forestTiles0, function (sprite, location) {
    pause(500) 
@@ -202,7 +200,6 @@ let addCol = 0
 
 frontOfHero.row = heroRow+addRow
 frontOfHero.col = heroCol+addCol
-let testnum =frontOfHero.row
 return frontOfHero
 }
 
@@ -374,7 +371,6 @@ export function useMagic(choice:magicKind){
             4 5 5 5 4 4 4 4 2 2 2 2 4 2 4 4
         `)){    
             actionOfMagic(true)
-            let testnum2 =frontOfHero.row
         }
         else{
             gemsHero.say("There is not hot lava need to be frozen!")
@@ -401,8 +397,6 @@ export function useMagic(choice:magicKind){
         `)){    
             actionOfMagic(false)
         }else{
-            let test1 = frontOfHero.col
-            let test2 = frontOfHero.col
             gemsHero.say("There is not poison plant need to be fired!")
         }
         break
