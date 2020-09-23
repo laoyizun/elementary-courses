@@ -7,8 +7,6 @@ namespace SpriteKind {
     export const iceMagic = SpriteKind.create()
     export const fireMagic = SpriteKind.create()
 }
-//% weight=100 color=#6699CC icon="\uf140" block="Getgems"
-//% groups='["Operate", "Move"]'
 namespace getgems {
 
 //角色碰到障碍物回退
