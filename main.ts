@@ -7,20 +7,6 @@ namespace SpriteKind {
     export const iceMagic = SpriteKind.create()
     export const fireMagic = SpriteKind.create()
 }
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    getgems.stepForward()
-})
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    getgems.turn(getgems.turnDirection.left)
-})
-controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (getgems.isObastaleAhead(getgems.obastaleKind.lava)) {
-        getgems.useMagic(getgems.magicKind.ice)
-    }
-    if (getgems.isObastaleAhead(getgems.obastaleKind.plant)) {
-        getgems.useMagic(getgems.magicKind.fire)
-    }
-})
 namespace getgems {
 
 //角色碰到障碍物回退
