@@ -1,12 +1,4 @@
-namespace SpriteKind {
-    export const gemsPlayer = SpriteKind.create()
-    export const gemsCatcher = SpriteKind.create()
-    export const gems = SpriteKind.create()
-    export const getGemsKind = SpriteKind.create()
-    export const gemsKind = SpriteKind.create()
-    export const iceMagic = SpriteKind.create()
-    export const fireMagic = SpriteKind.create()
-}
+
 //% weight=100 color=#6699CC icon="\uf140" block="Getgems"
 //% groups='["Operate", "Move"]'
 namespace getgems {
@@ -649,4 +641,12 @@ export function useMagic(choice:magicKind){
 
 
 }
-getgems.initGame()
+namespace SpriteKind {
+    export const gemsPlayer = SpriteKind.create()
+    export const gemsCatcher = SpriteKind.create()
+    export const gems = SpriteKind.create()
+    export const getGemsKind = SpriteKind.create()
+    export const gemsKind = SpriteKind.create()
+    export const iceMagic = SpriteKind.create()
+    export const fireMagic = SpriteKind.create()
+}
