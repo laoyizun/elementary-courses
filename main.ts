@@ -14,7 +14,12 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     getgems.turn(getgems.turnDirection.left)
 })
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
-    getgems.useMagic(getgems.magicKind.fire)
+    if (getgems.isObastaleAhead(getgems.obastaleKind.lava)) {
+        getgems.useMagic(getgems.magicKind.ice)
+    }
+    if (getgems.isObastaleAhead(getgems.obastaleKind.plant)) {
+        getgems.useMagic(getgems.magicKind.fire)
+    }
 })
 namespace getgems {
 
@@ -34,7 +39,82 @@ function goBack(){
 }
 
 //事件注册
-//9.23更新标记：魔法消除障碍物碰撞事件
+//魔法消除障碍物碰撞事件
+scene.onOverlapTile(SpriteKind.fireMagic, img`
+    . . . . . . c c . . . . . c c .
+    . . . c c . c 3 c . c c . c 3 c
+    . . c 3 6 c 3 3 c . c 3 c 6 3 c
+    . . c 3 3 3 3 6 c . c 3 6 3 3 c
+    . . . c 6 3 6 6 c c c 3 3 3 c .
+    . . . . c c 6 6 c 6 c 6 3 3 c .
+    . . . . c 3 c 6 c 3 3 c 6 6 c .
+    c c . c 3 3 c c c c 3 3 c 6 c .
+    c 3 c c 3 6 6 c 3 c 3 6 c 6 c .
+    c 3 3 6 3 6 3 6 3 3 3 c c c c c
+    . c 3 3 3 c 3 3 6 3 6 c c 3 3 c
+    . . c 3 3 c c 3 3 3 6 c 3 3 6 .
+    c c c 6 3 6 c c 6 3 6 6 3 6 c c
+    c 3 3 3 3 3 c c c 3 6 3 3 3 3 c
+    . c c 6 6 3 6 6 c 6 3 3 6 c c .
+    . . . c 6 3 3 6 6 6 6 3 c . . .
+`, function(sprite: Sprite, location: tiles.Location) {
+    tiles.setTileAt(tiles.getTileLocation(location.col,location.row), img`
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+    `)
+})
+scene.onOverlapTile(SpriteKind.iceMagic, img`
+    5 4 4 5 5 4 4 4 4 2 2 2 4 4 4 4
+    4 4 4 4 4 5 5 4 2 2 2 2 4 4 4 5
+    4 2 2 2 4 4 5 4 2 2 4 4 5 5 5 5
+    2 2 4 2 4 4 5 4 2 2 4 5 5 5 5 4
+    2 2 2 2 4 4 5 4 2 2 4 4 5 5 4 4
+    4 2 2 2 4 5 5 4 4 4 4 4 4 4 4 2
+    2 2 2 4 4 5 5 5 4 4 2 2 2 2 2 2
+    4 2 2 4 5 5 5 5 4 2 2 4 2 2 2 4
+    5 4 4 4 4 4 4 5 5 4 2 2 2 4 4 4
+    4 4 4 2 2 2 4 4 5 5 4 4 4 4 5 5
+    4 2 2 2 2 2 2 2 4 5 5 5 5 5 5 5
+    5 4 4 2 4 2 2 4 4 5 5 5 4 4 4 5
+    5 5 4 2 2 2 4 4 4 5 5 4 2 2 2 4
+    4 5 4 4 4 4 5 5 5 5 4 2 4 2 2 4
+    4 5 5 5 5 5 5 4 4 4 2 4 2 4 2 4
+    4 5 5 5 4 4 4 4 2 2 2 2 4 2 4 4
+`, function(sprite: Sprite, location: tiles.Location) {
+    tiles.setTileAt(tiles.getTileLocation(location.col,location.row), img`
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+    `)
+})
+
 //碰到墙回退
 scene.onOverlapTile(SpriteKind.gemsPlayer, sprites.builtin.forestTiles0, function (sprite, location) {
    pause(500) 
@@ -150,6 +230,30 @@ function levelset(level:number){
                         . . . . . . . . . .
                     `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.buttonTealDepressed,sprites.dungeon.hazardLava1,sprites.builtin.coral0], TileScale.Sixteen))
                     break;
+                case 5:
+                    tiles.setTilemap(tiles.createTilemap(hex`0a0008000101010101010101010101030101010101010101010004020101010101010100010101010101010101000101010101010101010004020101010101010100010101010101010101010101010101010101`, img`
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                    `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.buttonTealDepressed,sprites.dungeon.hazardLava1], TileScale.Sixteen))
+                    break;
+                case 6:
+                    tiles.setTilemap(tiles.createTilemap(hex`0a0008000101010101010101010101030101010101010101010401010101010101010102010101010101010101050101010101010101010201010101010101010104010101010101010101020101010101010101`, img`
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                    `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.buttonTealDepressed,sprites.dungeon.hazardLava1,sprites.builtin.coral0], TileScale.Sixteen))
+                    break;
                     
 			}    
 }
@@ -172,11 +276,11 @@ export enum magicKind{
     fire ,
     ice
 }
-// interface IspriteLocation{
-//     row:number,
-//     col:number
-// }
-let frontOfHero ={
+export enum obastaleKind{
+    lava ,
+    plant
+}
+export let frontOfHero ={
     //行
     row:0,
     //列
@@ -273,7 +377,7 @@ export function initGame(){
     gemsHero.z = 1000
     heroRow = gemsHero.y/16-0.5
     heroCol = gemsHero.x/16-0.5
-    gemsHero.say("改程序前，先画流程图")
+    gemsHero.say("改程序前，先画流程图",3000)
 }
 
 //获得宝石
@@ -339,7 +443,7 @@ function actionOfMagic(isIceMagic:boolean){
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
-        `,SpriteKind.iceMagic)
+        `,SpriteKind.fireMagic)
         tiles.placeOnTile(magicCube2, tiles.getTileLocation(frontOfHero.col, frontOfHero.row))
         pause(500)
         magicCube2.destroy(effects.fire,500)
@@ -402,6 +506,48 @@ export function useMagic(choice:magicKind){
         break
     }
 }
+    //判断前方障碍物
+    //% block="there is %obstaleKind ahead"
+    export function isObastaleAhead(choice:obastaleKind): boolean {
+        getTheFrontOfHero()
+        if(choice == obastaleKind.lava){
+            if(tiles.tileAtLocationEquals(tiles.getTileLocation(frontOfHero.col, frontOfHero.row), img`
+                5 4 4 5 5 4 4 4 4 2 2 2 4 4 4 4
+                4 4 4 4 4 5 5 4 2 2 2 2 4 4 4 5
+                4 2 2 2 4 4 5 4 2 2 4 4 5 5 5 5
+                2 2 4 2 4 4 5 4 2 2 4 5 5 5 5 4
+                2 2 2 2 4 4 5 4 2 2 4 4 5 5 4 4
+                4 2 2 2 4 5 5 4 4 4 4 4 4 4 4 2
+                2 2 2 4 4 5 5 5 4 4 2 2 2 2 2 2
+                4 2 2 4 5 5 5 5 4 2 2 4 2 2 2 4
+                5 4 4 4 4 4 4 5 5 4 2 2 2 4 4 4
+                4 4 4 2 2 2 4 4 5 5 4 4 4 4 5 5
+                4 2 2 2 2 2 2 2 4 5 5 5 5 5 5 5
+                5 4 4 2 4 2 2 4 4 5 5 5 4 4 4 5
+                5 5 4 2 2 2 4 4 4 5 5 4 2 2 2 4
+                4 5 4 4 4 4 5 5 5 5 4 2 4 2 2 4
+                4 5 5 5 5 5 5 4 4 4 2 4 2 4 2 4
+                4 5 5 5 4 4 4 4 2 2 2 2 4 2 4 4
+            `)){return true}return false}
+        else{if(tiles.tileAtLocationEquals(tiles.getTileLocation(frontOfHero.col, frontOfHero.row), img`
+            . . . . . . c c . . . . . c c .
+            . . . c c . c 3 c . c c . c 3 c
+            . . c 3 6 c 3 3 c . c 3 c 6 3 c
+            . . c 3 3 3 3 6 c . c 3 6 3 3 c
+            . . . c 6 3 6 6 c c c 3 3 3 c .
+            . . . . c c 6 6 c 6 c 6 3 3 c .
+            . . . . c 3 c 6 c 3 3 c 6 6 c .
+            c c . c 3 3 c c c c 3 3 c 6 c .
+            c 3 c c 3 6 6 c 3 c 3 6 c 6 c .
+            c 3 3 6 3 6 3 6 3 3 3 c c c c c
+            . c 3 3 3 c 3 3 6 3 6 c c 3 3 c
+            . . c 3 3 c c 3 3 3 6 c 3 3 6 .
+            c c c 6 3 6 c c 6 3 6 6 3 6 c c
+            c 3 3 3 3 3 c c c 3 6 3 3 3 3 c
+            . c c 6 6 3 6 6 c 6 3 3 6 c c .
+            . . . c 6 3 3 6 6 6 6 3 c . . .
+        `)){return true}return false}
+    }
 
     //转向
     //%block="turn %turnDirection"
