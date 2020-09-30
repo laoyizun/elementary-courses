@@ -7,7 +7,7 @@ namespace SpriteKind {
     export const fireMagic = SpriteKind.create()
 }
 //% weight=100 color=#6699CC icon="\uf140" block="Getgems"
-//% groups='["Operate","Others","Move"]'
+//% groups='["Operate", "Move"]'
 namespace getgems {
 
 //角色碰到障碍物回退
@@ -238,9 +238,9 @@ function levelset(level:number){
                         . . . . . . . . . .
                     `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.buttonTealDepressed,sprites.dungeon.hazardLava1,sprites.builtin.coral0], TileScale.Sixteen))
                     break;
-                case 7:
-                    let L7random = randint(0, 3)
-                    switch (L7random){
+                case 8:
+                    let L8random = randint(0, 3)
+                    switch (L8random){
                         case 0:
                         tiles.setTilemap(tiles.createTilemap(hex`0a0008000101010101010101010101010101010101010101010101010101010101010101010102010101010101010101000101010101010101010301010101010101010101010101010101010101010101010101`, img`
                             . . . . . . . . . .
@@ -291,7 +291,7 @@ function levelset(level:number){
                         break;
                     }
                     break;
-                case 8:
+                case 7:
                     tiles.setTilemap(tiles.createTilemap(hex`0a0008000101010101010101010101030000000100000001010101010001000100010100000000000001000101000101010101000001010000010201010100010100000100000000000101010101010101010101`, img`
                         . . . . . . . . . .
                         . . . . . . . . . .
@@ -304,7 +304,7 @@ function levelset(level:number){
                     `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.buttonTealDepressed], TileScale.Sixteen))
                     break;                   
                 case 9:
-                    tiles.setTilemap(tiles.createTilemap(hex`0a0008000101010101010101010101030101010101010101010401010101010101010102010101010101010101050101010101010101010201010101010101010104010101010101010101020101010101010101`, img`
+                    tiles.setTilemap(tiles.createTilemap(hex`0a0008000101010101010101010101030000000105050501010101010401050105010105050004040401050101050101010101000501010404010201010105010100000104040400000101010101010101010101`, img`
                         . . . . . . . . . .
                         . . . . . . . . . .
                         . . . . . . . . . .
@@ -313,8 +313,8 @@ function levelset(level:number){
                         . . . . . . . . . .
                         . . . . . . . . . .
                         . . . . . . . . . .
-                    `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.buttonTealDepressed,sprites.dungeon.hazardLava1,sprites.builtin.coral0], TileScale.Sixteen))
-                    break;
+                    `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.buttonTealDepressed,sprites.dungeon.hazardLava0,sprites.builtin.coral0], TileScale.Sixteen))
+                    break;  
                     
 			}    
 }
@@ -332,6 +332,11 @@ heroDirection = 0
 export enum turnDirection{
     left,
     right
+    }
+export enum wallDirection{
+    left,
+    right,
+    front
     }
 export enum magicKind{
     fire ,
@@ -391,7 +396,7 @@ export function initGame(){
     . . . . . f f f f f f . . . . .
     . . . . . f f . . f f . . . . .
 `, SpriteKind.gemsPlayer)
-    level = game.askForNumber("set level(1-6)")
+    level = game.askForNumber("set level(1-9)")
     levelset(level)
     tiles.placeOnRandomTile(gemsHero, img`
         b b b b b b b b b b b b b b b b
@@ -439,6 +444,7 @@ export function initGame(){
     heroRow = gemsHero.y/16-0.5
     heroCol = gemsHero.x/16-0.5
     gemsHero.say("改程序前，先画流程图",3000)
+    getTheFrontOfHero()
 }
 
 //获得宝石
@@ -610,12 +616,43 @@ export function useMagic(choice:magicKind){
             . . . c 6 3 3 6 6 6 6 3 c . . .
         `)){return true}return false}
     }
-    //判断前方障碍物
-    //%block="there is a wall ahead"
+    //判断周围是否有墙 0下  1左  2上  3右
+    //%block="there is a wall on %wallDirection"
     //%group="Others"
-    export function isWallAhead(): boolean {
+    export function isThereAWallOn(choice:wallDirection): boolean {
         getTheFrontOfHero()
-            if(tiles.tileAtLocationEquals(tiles.getTileLocation(frontOfHero.col, frontOfHero.row), img`
+        let frontCol = 0
+        let frontRow = 0
+        let leftCol = 0
+        let leftRow = 0
+        let rightCol =0
+        let rightRow = 0
+        switch(heroDirection){
+            case 0:
+            frontRow+=1
+            leftCol+=1
+            rightCol+=-1
+            break
+            case 1:
+            frontCol+=-1
+            leftRow+=1
+            rightRow+=-1
+            break
+            case 2:
+            frontRow+=-1
+            leftCol+=-1
+            rightCol+=1
+            break
+            case 3:
+            frontCol+=1
+            leftRow+=-1
+            rightRow+=1
+            break
+
+        }
+        switch(choice){
+            case wallDirection.front:
+                if(tiles.tileAtLocationEquals(tiles.getTileLocation(heroCol+frontCol, heroRow+frontRow), img`
                 . . . 6 6 6 6 6 6 6 6 6 6 . . .
                 . 6 6 7 7 7 7 7 7 7 7 7 7 6 6 .
                 . 6 7 7 7 7 7 7 7 7 7 7 7 7 6 .
@@ -632,7 +669,52 @@ export function useMagic(choice:magicKind){
                 . f 6 e e 8 6 6 8 8 6 8 8 8 f .
                 . . f e e e 6 e 8 8 f f 8 f . .
                 . . . f f f 8 e e f f f f . . .
-            `)){return true}return false}
+                `)){return true}return false
+            break
+            case wallDirection.right:
+                if(tiles.tileAtLocationEquals(tiles.getTileLocation(heroCol+rightCol, heroRow+rightRow), img`
+                    . . . 6 6 6 6 6 6 6 6 6 6 . . .
+                    . 6 6 7 7 7 7 7 7 7 7 7 7 6 6 .
+                    . 6 7 7 7 7 7 7 7 7 7 7 7 7 6 .
+                    6 7 7 7 7 7 7 7 7 7 7 7 7 7 7 6
+                    6 7 7 7 7 7 7 7 7 7 7 7 7 7 7 6
+                    6 7 6 7 7 7 7 7 7 7 7 7 7 6 7 6
+                    8 6 7 7 7 7 7 7 7 7 7 7 7 7 6 8
+                    8 7 7 7 7 7 7 7 7 7 7 7 7 7 7 8
+                    6 7 6 7 7 7 6 7 7 7 7 6 7 7 7 6
+                    6 8 6 7 7 6 7 7 7 6 7 7 6 6 8 6
+                    8 6 6 7 6 6 7 7 6 6 6 7 6 6 6 8
+                    8 6 8 6 6 6 7 6 6 6 6 6 8 6 6 8
+                    8 8 6 6 8 6 6 6 8 6 6 6 8 8 8 8
+                    . f 6 e e 8 6 6 8 8 6 8 8 8 f .
+                    . . f e e e 6 e 8 8 f f 8 f . .
+                    . . . f f f 8 e e f f f f . . .
+                `)){return true}return false
+            break
+            case wallDirection.left:
+                if(tiles.tileAtLocationEquals(tiles.getTileLocation(heroCol+leftCol, heroRow+leftRow), img`
+                . . . 6 6 6 6 6 6 6 6 6 6 . . .
+                . 6 6 7 7 7 7 7 7 7 7 7 7 6 6 .
+                . 6 7 7 7 7 7 7 7 7 7 7 7 7 6 .
+                6 7 7 7 7 7 7 7 7 7 7 7 7 7 7 6
+                6 7 7 7 7 7 7 7 7 7 7 7 7 7 7 6
+                6 7 6 7 7 7 7 7 7 7 7 7 7 6 7 6
+                8 6 7 7 7 7 7 7 7 7 7 7 7 7 6 8
+                8 7 7 7 7 7 7 7 7 7 7 7 7 7 7 8
+                6 7 6 7 7 7 6 7 7 7 7 6 7 7 7 6
+                6 8 6 7 7 6 7 7 7 6 7 7 6 6 8 6
+                8 6 6 7 6 6 7 7 6 6 6 7 6 6 6 8
+                8 6 8 6 6 6 7 6 6 6 6 6 8 6 6 8
+                8 8 6 6 8 6 6 6 8 6 6 6 8 8 8 8
+                . f 6 e e 8 6 6 8 8 6 8 8 8 f .
+                . . f e e e 6 e 8 8 f f 8 f . .
+                . . . f f f 8 e e f f f f . . .
+                `)){return true}return false
+            break
+        }
+        
+    
+    }
         
             
     
@@ -749,4 +831,3 @@ export function useMagic(choice:magicKind){
 
 
 }
-
