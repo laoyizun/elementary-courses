@@ -1,3 +1,11 @@
+namespace SpriteKind {
+    export const gemsPlayer = SpriteKind.create()
+    export const gems = SpriteKind.create()
+    export const getGemsKind = SpriteKind.create()
+    export const gemsKind = SpriteKind.create()
+    export const iceMagic = SpriteKind.create()
+    export const fireMagic = SpriteKind.create()
+}
 //% weight=100 color=#6699CC icon="\uf140" block="Getgems"
 //% groups='["Operate","Others","Move"]'
 namespace getgems {
@@ -148,10 +156,7 @@ scene.onOverlapTile(SpriteKind.gemsPlayer, img`
 })
 
 //获得宝石事件
-sprites.onOverlap(SpriteKind.gemsCatcher, SpriteKind.gems, function(sprite: Sprite, otherSprite: Sprite) {
-    otherSprite.destroy()
-    info.player1.changeScoreBy(-1)
-})
+
 sprites.onOverlap(SpriteKind.getGemsKind, SpriteKind.gemsKind, function(sprite: Sprite, otherSprite: Sprite) {
     otherSprite.destroy()
     info.player1.changeScoreBy(-1)
@@ -222,6 +227,83 @@ function levelset(level:number){
                     `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.buttonTealDepressed,sprites.dungeon.hazardLava1], TileScale.Sixteen))
                     break;
                 case 6:
+                    tiles.setTilemap(tiles.createTilemap(hex`0a0008000101010101010101010101030101010101010101010401010101010101010102010101010101010101050101010101010101010201010101010101010104010101010101010101020101010101010101`, img`
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                    `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.buttonTealDepressed,sprites.dungeon.hazardLava1,sprites.builtin.coral0], TileScale.Sixteen))
+                    break;
+                case 7:
+                    let L7random = randint(0, 3)
+                    switch (L7random){
+                        case 0:
+                        tiles.setTilemap(tiles.createTilemap(hex`0a0008000101010101010101010101010101010101010101010101010101010101010101010102010101010101010101000101010101010101010301010101010101010101010101010101010101010101010101`, img`
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                        `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.buttonTealDepressed,sprites.dungeon.collectibleInsignia], TileScale.Sixteen))
+                        break;
+                        case 1:
+                        tiles.setTilemap(tiles.createTilemap(hex`0a0008000101010101010101010101010101010101010101010101010101010101010101010102000301010101010101010101010101010101010101010101010101010101010101010101010101010101010101`, img`
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                        `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.buttonTealDepressed,sprites.dungeon.collectibleInsignia], TileScale.Sixteen))
+                        break;
+                        case 2:
+                        tiles.setTilemap(tiles.createTilemap(hex`0a0008000101010101010101010101010101030101010101010101010001010101010101010102010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101`, img`
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                        `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.buttonTealDepressed,sprites.dungeon.collectibleInsignia], TileScale.Sixteen))
+                        break;
+                        case 3:
+                        tiles.setTilemap(tiles.createTilemap(hex`0a0008000101010101010101010101010101010101010101010101010101010101010101030002010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101`, img`
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                            . . . . . . . . . .
+                        `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.buttonTealDepressed,sprites.dungeon.collectibleInsignia], TileScale.Sixteen))
+                        break;
+                    }
+                    break;
+                case 8:
+                    tiles.setTilemap(tiles.createTilemap(hex`0a0008000101010101010101010101030000000100000001010101010001000100010100000000000001000101000101010101000001010000010201010100010100000100000000000101010101010101010101`, img`
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                        . . . . . . . . . .
+                    `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.buttonTealDepressed], TileScale.Sixteen))
+                    break;                   
+                case 9:
                     tiles.setTilemap(tiles.createTilemap(hex`0a0008000101010101010101010101030101010101010101010401010101010101010102010101010101010101050101010101010101010201010101010101010104010101010101010101020101010101010101`, img`
                         . . . . . . . . . .
                         . . . . . . . . . .
@@ -667,12 +749,4 @@ export function useMagic(choice:magicKind){
 
 
 }
-namespace SpriteKind {
-    export const gemsPlayer = SpriteKind.create()
-    export const gemsCatcher = SpriteKind.create()
-    export const gems = SpriteKind.create()
-    export const getGemsKind = SpriteKind.create()
-    export const gemsKind = SpriteKind.create()
-    export const iceMagic = SpriteKind.create()
-    export const fireMagic = SpriteKind.create()
-}
+
