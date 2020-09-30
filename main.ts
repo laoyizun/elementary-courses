@@ -304,7 +304,7 @@ function levelset(level:number){
                     `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.buttonTealDepressed], TileScale.Sixteen))
                     break;                   
                 case 9:
-                    tiles.setTilemap(tiles.createTilemap(hex`0a0008000101010101010101010101030000000105050501010101010401050105010105050004040401050101050101010101000501010404010201010105010100000104040400000101010101010101010101`, img`
+                    tiles.setTilemap(tiles.createTilemap(hex`0a0008000101010101010101010101030000000104040401010101010501040104010104040005050501040101040101010101000401010505010201010104010100000105050500000101010101010101010101`, img`
                         . . . . . . . . . .
                         . . . . . . . . . .
                         . . . . . . . . . .
@@ -313,7 +313,7 @@ function levelset(level:number){
                         . . . . . . . . . .
                         . . . . . . . . . .
                         . . . . . . . . . .
-                    `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.buttonTealDepressed,sprites.dungeon.hazardLava0,sprites.builtin.coral0], TileScale.Sixteen))
+                    `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.buttonTealDepressed,sprites.builtin.coral0,sprites.dungeon.hazardLava1], TileScale.Sixteen))
                     break;  
                     
 			}    
