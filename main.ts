@@ -1,14 +1,5 @@
-namespace SpriteKind {
-    export const gemsPlayer = SpriteKind.create()
-    export const gemsCatcher = SpriteKind.create()
-    export const gems = SpriteKind.create()
-    export const getGemsKind = SpriteKind.create()
-    export const gemsKind = SpriteKind.create()
-    export const iceMagic = SpriteKind.create()
-    export const fireMagic = SpriteKind.create()
-}
 //% weight=100 color=#6699CC icon="\uf140" block="Getgems"
-//% groups='["Operate", "Move"]'
+//% groups='["Operate","Others","Move"]'
 namespace getgems {
 
 //角色碰到障碍物回退
@@ -495,7 +486,8 @@ export function useMagic(choice:magicKind){
     }
 }
     //判断前方障碍物
-    //% block="there is %obstaleKind ahead"
+    //%block="there is %obstaleKind ahead"
+    //%group="Others"
     export function isObastaleAhead(choice:obastaleKind): boolean {
         getTheFrontOfHero()
         if(choice == obastaleKind.lava){
@@ -536,6 +528,32 @@ export function useMagic(choice:magicKind){
             . . . c 6 3 3 6 6 6 6 3 c . . .
         `)){return true}return false}
     }
+    //判断前方障碍物
+    //%block="there is a wall ahead"
+    //%group="Others"
+    export function isWallAhead(): boolean {
+        getTheFrontOfHero()
+            if(tiles.tileAtLocationEquals(tiles.getTileLocation(frontOfHero.col, frontOfHero.row), img`
+                . . . 6 6 6 6 6 6 6 6 6 6 . . .
+                . 6 6 7 7 7 7 7 7 7 7 7 7 6 6 .
+                . 6 7 7 7 7 7 7 7 7 7 7 7 7 6 .
+                6 7 7 7 7 7 7 7 7 7 7 7 7 7 7 6
+                6 7 7 7 7 7 7 7 7 7 7 7 7 7 7 6
+                6 7 6 7 7 7 7 7 7 7 7 7 7 6 7 6
+                8 6 7 7 7 7 7 7 7 7 7 7 7 7 6 8
+                8 7 7 7 7 7 7 7 7 7 7 7 7 7 7 8
+                6 7 6 7 7 7 6 7 7 7 7 6 7 7 7 6
+                6 8 6 7 7 6 7 7 7 6 7 7 6 6 8 6
+                8 6 6 7 6 6 7 7 6 6 6 7 6 6 6 8
+                8 6 8 6 6 6 7 6 6 6 6 6 8 6 6 8
+                8 8 6 6 8 6 6 6 8 6 6 6 8 8 8 8
+                . f 6 e e 8 6 6 8 8 6 8 8 8 f .
+                . . f e e e 6 e 8 8 f f 8 f . .
+                . . . f f f 8 e e f f f f . . .
+            `)){return true}return false}
+        
+            
+    
 
     //转向
     //%block="turn %turnDirection"
@@ -648,4 +666,13 @@ export function useMagic(choice:magicKind){
 }
 
 
+}
+namespace SpriteKind {
+    export const gemsPlayer = SpriteKind.create()
+    export const gemsCatcher = SpriteKind.create()
+    export const gems = SpriteKind.create()
+    export const getGemsKind = SpriteKind.create()
+    export const gemsKind = SpriteKind.create()
+    export const iceMagic = SpriteKind.create()
+    export const fireMagic = SpriteKind.create()
 }
