@@ -6,6 +6,8 @@ namespace SpriteKind {
     export const iceMagic = SpriteKind.create()
     export const fireMagic = SpriteKind.create()
 }
+//% weight=100 color=#6699CC icon="\uf140" block="Getgems"
+//% groups='["Operate", "Move"]'
 namespace getgems {
 
 //角色碰到障碍物回退
@@ -20,6 +22,7 @@ function goBack(){
         heroRow += 1
     }
     scene.cameraShake(4, 500)
+    gemsHero.say("ooh！",1000)
     tiles.placeOnTile(gemsHero, tiles.getTileLocation(heroCol, heroRow))
 }
 
@@ -126,7 +129,7 @@ scene.onOverlapTile(SpriteKind.gemsPlayer, img`
     4 5 5 5 4 4 4 4 2 2 2 2 4 2 4 4
 `, function(sprite: Sprite, location: tiles.Location) {
     goBack()
-    gemsHero.say("there is lava ahead,I can not go!")
+    gemsHero.say("There is lava ahead,I can not go!")
 
 })
 //碰到毒草
@@ -149,7 +152,7 @@ scene.onOverlapTile(SpriteKind.gemsPlayer, img`
     . . . c 6 3 3 6 6 6 6 3 c . . .
 `, function(sprite: Sprite, location: tiles.Location) {
     goBack()
-    gemsHero.say("There is poison plant,I can not go!")
+    gemsHero.say("The grass is poisonous,I can not go!")
 
 })
 
@@ -313,6 +316,9 @@ function levelset(level:number){
                         . . . . . . . . . .
                     `, [myTiles.transparency16,sprites.builtin.forestTiles0,sprites.dungeon.collectibleInsignia,sprites.dungeon.buttonTealDepressed,sprites.builtin.coral0,sprites.dungeon.hazardLava1], TileScale.Sixteen))
                     break;  
+                default:
+                    game.splash("Please choose level from 1 to 9")
+                    initGame()
                     
 			}    
 }
@@ -330,11 +336,6 @@ heroDirection = 0
 export enum turnDirection{
     left,
     right
-    }
-export enum wallDirection{
-    left,
-    right,
-    front
     }
 export enum magicKind{
     fire ,
@@ -376,6 +377,8 @@ return frontOfHero
 //%block
 //%group="Operate"
 export function initGame(){ 
+    level = game.askForNumber("set level(1-9)")
+    levelset(level)
     gemsHero = sprites.create(img`
     . . . . . . f f f f . . . . . .
     . . . . f f f 2 2 f f f . . . .
@@ -394,8 +397,6 @@ export function initGame(){
     . . . . . f f f f f f . . . . .
     . . . . . f f . . f f . . . . .
 `, SpriteKind.gemsPlayer)
-    level = game.askForNumber("set level(1-9)")
-    levelset(level)
     tiles.placeOnRandomTile(gemsHero, img`
         b b b b b b b b b b b b b b b b
         b c b b b b b b b b b b b b c b
@@ -442,7 +443,6 @@ export function initGame(){
     heroRow = gemsHero.y/16-0.5
     heroCol = gemsHero.x/16-0.5
     gemsHero.say("改程序前，先画流程图",3000)
-    getTheFrontOfHero()
 }
 
 //获得宝石
@@ -458,6 +458,7 @@ export function takeGems(){
     gemsHero.setKind(SpriteKind.gemsPlayer)
     gemsHero.setFlag(SpriteFlag.Ghost, false)
     gemsHero.y+=5
+    gemsHero.say("Take the gems!",500)
     if(gemsNum==0){
         game.over(true)
     }
@@ -538,11 +539,12 @@ export function useMagic(choice:magicKind){
             4 5 4 4 4 4 5 5 5 5 4 2 4 2 2 4
             4 5 5 5 5 5 5 4 4 4 2 4 2 4 2 4
             4 5 5 5 4 4 4 4 2 2 2 2 4 2 4 4
-        `)){    
+        `)){ 
+            gemsHero.say("Ice magic!",1000)   
             actionOfMagic(true)
         }
         else{
-            gemsHero.say("There is not hot lava need to be frozen!")
+            gemsHero.say("There is not hot lava need to be extinguished!")
         }
         break
         default:
@@ -563,10 +565,11 @@ export function useMagic(choice:magicKind){
             c 3 3 3 3 3 c c c 3 6 3 3 3 3 c
             . c c 6 6 3 6 6 c 6 3 3 6 c c .
             . . . c 6 3 3 6 6 6 6 3 c . . .
-        `)){    
+        `)){
+            gemsHero.say("fire magic!",1000)    
             actionOfMagic(false)
         }else{
-            gemsHero.say("There is not poison plant need to be fired!")
+            gemsHero.say("There is not poison grass need to be burned!")
         }
         break
     }
@@ -614,43 +617,12 @@ export function useMagic(choice:magicKind){
             . . . c 6 3 3 6 6 6 6 3 c . . .
         `)){return true}return false}
     }
-    //判断周围是否有墙 0下  1左  2上  3右
-    //%block="there is a wall on %wallDirection"
+    //判断前方障碍物
+    //%block="there is a wall ahead"
     //%group="Others"
-    export function isThereAWallOn(choice:wallDirection): boolean {
+    export function isWallAhead(): boolean {
         getTheFrontOfHero()
-        let frontCol = 0
-        let frontRow = 0
-        let leftCol = 0
-        let leftRow = 0
-        let rightCol =0
-        let rightRow = 0
-        switch(heroDirection){
-            case 0:
-            frontRow+=1
-            leftCol+=1
-            rightCol+=-1
-            break
-            case 1:
-            frontCol+=-1
-            leftRow+=1
-            rightRow+=-1
-            break
-            case 2:
-            frontRow+=-1
-            leftCol+=-1
-            rightCol+=1
-            break
-            case 3:
-            frontCol+=1
-            leftRow+=-1
-            rightRow+=1
-            break
-
-        }
-        switch(choice){
-            case wallDirection.front:
-                if(tiles.tileAtLocationEquals(tiles.getTileLocation(heroCol+frontCol, heroRow+frontRow), img`
+            if(tiles.tileAtLocationEquals(tiles.getTileLocation(frontOfHero.col, frontOfHero.row), img`
                 . . . 6 6 6 6 6 6 6 6 6 6 . . .
                 . 6 6 7 7 7 7 7 7 7 7 7 7 6 6 .
                 . 6 7 7 7 7 7 7 7 7 7 7 7 7 6 .
@@ -667,52 +639,7 @@ export function useMagic(choice:magicKind){
                 . f 6 e e 8 6 6 8 8 6 8 8 8 f .
                 . . f e e e 6 e 8 8 f f 8 f . .
                 . . . f f f 8 e e f f f f . . .
-                `)){return true}return false
-            break
-            case wallDirection.right:
-                if(tiles.tileAtLocationEquals(tiles.getTileLocation(heroCol+rightCol, heroRow+rightRow), img`
-                    . . . 6 6 6 6 6 6 6 6 6 6 . . .
-                    . 6 6 7 7 7 7 7 7 7 7 7 7 6 6 .
-                    . 6 7 7 7 7 7 7 7 7 7 7 7 7 6 .
-                    6 7 7 7 7 7 7 7 7 7 7 7 7 7 7 6
-                    6 7 7 7 7 7 7 7 7 7 7 7 7 7 7 6
-                    6 7 6 7 7 7 7 7 7 7 7 7 7 6 7 6
-                    8 6 7 7 7 7 7 7 7 7 7 7 7 7 6 8
-                    8 7 7 7 7 7 7 7 7 7 7 7 7 7 7 8
-                    6 7 6 7 7 7 6 7 7 7 7 6 7 7 7 6
-                    6 8 6 7 7 6 7 7 7 6 7 7 6 6 8 6
-                    8 6 6 7 6 6 7 7 6 6 6 7 6 6 6 8
-                    8 6 8 6 6 6 7 6 6 6 6 6 8 6 6 8
-                    8 8 6 6 8 6 6 6 8 6 6 6 8 8 8 8
-                    . f 6 e e 8 6 6 8 8 6 8 8 8 f .
-                    . . f e e e 6 e 8 8 f f 8 f . .
-                    . . . f f f 8 e e f f f f . . .
-                `)){return true}return false
-            break
-            case wallDirection.left:
-                if(tiles.tileAtLocationEquals(tiles.getTileLocation(heroCol+leftCol, heroRow+leftRow), img`
-                . . . 6 6 6 6 6 6 6 6 6 6 . . .
-                . 6 6 7 7 7 7 7 7 7 7 7 7 6 6 .
-                . 6 7 7 7 7 7 7 7 7 7 7 7 7 6 .
-                6 7 7 7 7 7 7 7 7 7 7 7 7 7 7 6
-                6 7 7 7 7 7 7 7 7 7 7 7 7 7 7 6
-                6 7 6 7 7 7 7 7 7 7 7 7 7 6 7 6
-                8 6 7 7 7 7 7 7 7 7 7 7 7 7 6 8
-                8 7 7 7 7 7 7 7 7 7 7 7 7 7 7 8
-                6 7 6 7 7 7 6 7 7 7 7 6 7 7 7 6
-                6 8 6 7 7 6 7 7 7 6 7 7 6 6 8 6
-                8 6 6 7 6 6 7 7 6 6 6 7 6 6 6 8
-                8 6 8 6 6 6 7 6 6 6 6 6 8 6 6 8
-                8 8 6 6 8 6 6 6 8 6 6 6 8 8 8 8
-                . f 6 e e 8 6 6 8 8 6 8 8 8 f .
-                . . f e e e 6 e 8 8 f f 8 f . .
-                . . . f f f 8 e e f f f f . . .
-                `)){return true}return false
-            break
-        }
-        
-    
-    }
+            `)){return true}return false}
         
             
     
@@ -725,8 +652,10 @@ export function useMagic(choice:magicKind){
         case turnDirection.right:
         heroDirection += 1
         heroDirection = heroDirection % 4
+        gemsHero.say("Turn right!",1000)
         break
         default :
+        gemsHero.say("Turn left!",1000)
         heroDirection += 3
         heroDirection = heroDirection % 4
         break
@@ -823,6 +752,7 @@ export function useMagic(choice:magicKind){
     } else if (heroDirection == 2) {
         heroRow += -1
     }
+    gemsHero.say("Move ahead!",1000)
     tiles.placeOnTile(gemsHero, tiles.getTileLocation(heroCol, heroRow))
     pause(500)
 }
