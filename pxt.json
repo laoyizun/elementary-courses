@@ -10,13 +10,14 @@
         "main.ts",
         "README.md",
         "tilemap.g.jres",
-        "tilemap.g.ts"
+        "tilemap.g.ts",
+        "getgems.ts"
     ],
     "testFiles": [
         "test.ts"
     ],
     "targetVersions": {
-        "target": "1.2.10",
+        "target": "1.12.24",
         "targetId": "arcade"
     },
     "supportedTargets": [
